@@ -26,15 +26,11 @@ vextract() {
 		esac
 	done
 
-	local TAR_CMD sfx
+	local TAR_CMD="${tar_cmd}"
+	local sfx
 	local archive="$1"
 	local ret=0
 
-	# When tar is explicitly put *first* in hostmakedepends
-	# Some packages require tar to build but not for extraction
-	case "$hostmakedepends " in
-	"tar "*)   TAR_CMD="tar" ;;
-	esac
 	[ -z "$TAR_CMD" ] && TAR_CMD="$(command -v bsdtar)"
 	[ -z "$TAR_CMD" ] && TAR_CMD="$(command -v tar)"
 	[ -z "$TAR_CMD" ] && msg_error "xbps-src: no suitable tar cmd (bsdtar, tar)\n"
@@ -75,21 +71,21 @@ vextract() {
 			-f $archive
 		;;
 	gz|bz2|xz|zst)
-		cp -f $archive "$dst"
+		cp -f $archive "${dst:-.}"
 		(
 			if [ "$dst" ]; then cd "$dst"; fi
 			case ${sfx} in
 			gz)
-				gunzip -f $archive
+				gunzip -f ${archive##*/}
 				;;
 			bz2)
-				bunzip2 -f $archive
+				bunzip2 -f ${archive##*/}
 				;;
 			xz)
-				unxz -f $archive
+				unxz -f ${archive##*/}
 				;;
 			zst)
-				unzstd $archive
+				unzstd ${archive##*/}
 				;;
 			esac
 		)
@@ -164,8 +160,10 @@ vsrcextract() {
 			break ;;
 		esac
 	done
+	local archive="$1"
+	shift
 	vextract "$sc" ${dst:+-C "$dst"} \
-		"${XBPS_SRCDISTDIR}/${pkgname}-${version}/$1"
+		"${XBPS_SRCDISTDIR}/${sourcepkg}-${version}/$archive" "$@"
 }
 
 vtar() {
@@ -177,7 +175,7 @@ vsrccopy() {
 	if [ $# -lt 2 ]; then
 		msg_error "vsrccopy <file>... <target>"
 	fi
-	_tgt="${@:-1}"
+	_tgt="${@: -1}"
 	mkdir -p "$_tgt"
 	while [ $# -gt 1 ]; do
 		cp -a "${XBPS_SRCDISTDIR}/${pkgname}-${version}/$1" "$_tgt"

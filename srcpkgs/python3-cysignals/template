@@ -1,19 +1,25 @@
 # Template file for 'python3-cysignals'
 pkgname=python3-cysignals
-version=1.11.2
-revision=4
-build_style=python3-module
-hostmakedepends="python3-setuptools python3-Cython autoconf"
-makedepends="python3-devel pari-devel"
+version=1.12.3
+revision=1
+build_style=python3-pep517
+build_helper=meson
+hostmakedepends="python3-meson-python python3-Cython"
+makedepends="python3-devel"
 depends="python3"
+checkdepends="python3-pytest gdb"
 short_desc="Interrupt and signal handling for Cython"
 maintainer="Gonzalo Tornaría <tornaria@cmat.edu.uy>"
 license="LGPL-3.0-or-later"
 homepage="https://github.com/sagemath/cysignals"
+changelog="https://github.com/sagemath/cysignals/releases"
 distfiles="${PYPI_SITE}/c/cysignals/cysignals-${version}.tar.gz"
-checksum=5858b1760fbe21848121b826b2463a67ac5a45caf3d73105497a68618c5a6fa6
-nocross=yes # runs binaries built for target
+checksum=89f7626dbf29db5ab3d6eff15a89978f4eb5193c320e9099bcc157dacdefd1eb
 
-do_check() {
-	make check
-}
+# cysignals must be compiled without _FORTIFY_SOURCE
+CFLAGS="-U_FORTIFY_SOURCE"
+
+if [ "$XBPS_CHECK_PKGS" = full ]; then
+	# this would cause a build-time circular dependency
+	checkdepends+=" python3-cypari2"
+fi

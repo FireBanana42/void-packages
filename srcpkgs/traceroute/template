@@ -1,13 +1,13 @@
 # Template file for 'traceroute'
 pkgname=traceroute
-version=2.1.2
+version=2.1.6
 revision=1
 short_desc="Traces the route taken by packets over an IPv4/IPv6 network"
 maintainer="Enno Boland <gottox@voidlinux.org>"
 license="GPL-2.0-or-later, LGPL-2.1-or-later"
 homepage="https://traceroute.sourceforge.net"
 distfiles="${SOURCEFORGE_SITE}/traceroute/traceroute-${version}.tar.gz"
-checksum=507c268f2977b4e218ce73e7ebed45ba0d970a8ca4995dd9cbb1ffe8e99b5b1f
+checksum=9ccef9cdb9d7a98ff7fbf93f79ebd0e48881664b525c4b232a0fcec7dcb9db5e
 
 alternatives="
  traceroute:traceroute:/usr/bin/linux-traceroute

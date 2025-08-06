@@ -275,6 +275,7 @@ chroot_sync_repodata() {
     fi
 
     echo "syslog=false" > $confdir/00-xbps-src.conf
+    echo "staging=true" >> $confdir/00-xbps-src.conf
 
     # Copy host repos to the cross root.
     if [ -n "$XBPS_CROSS_BUILD" ]; then
@@ -303,12 +304,16 @@ chroot_sync_repodata() {
         fi
 
         echo "syslog=false" > $crossconfdir/00-xbps-src.conf
+        echo "staging=true" >> $crossconfdir/00-xbps-src.conf
     fi
 
 
     # Copy xbps repository keys to the masterdir.
     mkdir -p $XBPS_MASTERDIR/var/db/xbps/keys
     cp -f $XBPS_COMMONDIR/repo-keys/*.plist $XBPS_MASTERDIR/var/db/xbps/keys
+    if [ -n "$(shopt -s nullglob; echo "$XBPS_DISTDIR"/etc/repo-keys/*.plist)" ]; then
+        cp -f "$XBPS_DISTDIR"/etc/repo-keys/*.plist "$XBPS_MASTERDIR"/var/db/xbps/keys
+    fi
 
     # Make sure to sync index for remote repositories.
     if [ -z "$XBPS_SKIP_REMOTEREPOS" ]; then

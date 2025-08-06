@@ -1,18 +1,18 @@
 # Template file for 'nnn'
 pkgname=nnn
-version=4.8
+version=5.1
 revision=1
 build_style=gnu-makefile
 make_install_target="install install-desktop"
 hostmakedepends="pkg-config"
 makedepends="ncurses-devel readline-devel"
 short_desc="Missing terminal file browser for X"
-maintainer="Dennis Kraus <kraus@posteo.de>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="BSD-2-Clause"
 homepage="https://github.com/jarun/nnn"
 changelog="https://raw.githubusercontent.com/jarun/nnn/master/CHANGELOG"
 distfiles="https://github.com/jarun/nnn/archive/v${version}.tar.gz"
-checksum=0a744e67a0ce8b5e1e04961f542d2c33ddb6ceed46ba760dd35c4922b21f1146
+checksum=9faaff1e3f5a2fd3ed570a83f6fb3baf0bfc6ebd6a9abac16203d057ac3fffe3
 
 if [ "$XBPS_TARGET_LIBC" = "musl" ]; then
 	makedepends+=" musl-fts-devel"

@@ -1,6 +1,6 @@
 # Template file for 'fcitx5-gtk'
 pkgname=fcitx5-gtk
-version=5.0.23
+version=5.1.4
 revision=1
 build_style=cmake
 build_helper=gir
@@ -13,8 +13,8 @@ short_desc="Fcitx v5 - GTK common"
 maintainer="Đoàn Trần Công Danh <congdanhqx@gmail.com>"
 license="LGPL-2.1-or-later"
 homepage="https://fcitx-im.org/wiki/Fcitx"
-distfiles="https://download.fcitx-im.org/fcitx5/fcitx5-gtk/fcitx5-gtk-${version}.tar.xz"
-checksum=ad124ce7f1bbca650dda47cb73c5572913419513eacf9ebe84c9f6753c920868
+distfiles="https://download.fcitx-im.org/fcitx5/fcitx5-gtk/fcitx5-gtk-${version}.tar.zst"
+checksum=1dcfc5bce9cb886dd461f9f9efa109f9da735cd7041e3fdaed7754b7ea099453
 lib32disabled=yes
 
 build_options="gir"
@@ -35,16 +35,22 @@ post_install() {
 fcitx5-gtk+2_package() {
 	short_desc="${short_desc% common}+2 IM Modules"
 	lib32disabled=yes
+	replaces="libfcitx-gtk>=0"
+	provides="libfcitx-gtk-5_1"
 	pkg_install() {
 		vmove usr/lib/gtk-2.0
+		vmove usr/bin/fcitx5-gtk2-immodule-probing
 	}
 }
 
 fcitx5-gtk+3_package() {
 	short_desc="${short_desc% common}+3 IM Modules"
 	lib32disabled=yes
+	replaces="libfcitx-gtk3>=0"
+	provides="libfcitx-gtk3-5_1"
 	pkg_install() {
 		vmove usr/lib/gtk-3.0
+		vmove usr/bin/fcitx5-gtk3-immodule-probing
 	}
 }
 
@@ -53,6 +59,7 @@ fcitx5-gtk4_package() {
 	lib32disabled=yes
 	pkg_install() {
 		vmove usr/lib/gtk-4.0
+		vmove usr/bin/fcitx5-gtk4-immodule-probing
 	}
 }
 

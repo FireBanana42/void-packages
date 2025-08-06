@@ -51,7 +51,7 @@ create_debug_pkg() {
 		msg_red "$pkgver: failed to create debug pkg\n"
 		return 1
 	fi
-	printf "${pkgver} " >> ${_destdir}/rdeps
+	printf "${pkgver} " >> ${XBPS_STATEDIR}/${pkgname}-dbg-rdeps
 	rmdir --ignore-fail-on-non-empty "${PKGDESTDIR}/usr/lib" 2>/dev/null
 	return 0
 }
@@ -65,7 +65,7 @@ hook() {
 
 	STRIPCMD=/usr/bin/$STRIP
 
-	find ${PKGDESTDIR} -type f | while read f; do
+	find ${PKGDESTDIR} -type f | while read -r f; do
 		if [[ $f =~ ^${PKGDESTDIR}/usr/lib/debug/ ]]; then
 			continue
 		fi

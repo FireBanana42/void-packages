@@ -1,21 +1,23 @@
 # Template file for 'zellij'
 pkgname=zellij
-version=0.37.2
+version=0.43.0
 revision=1
-# Dependency crate `wasmer-vm` only supports the following archs: x86_64, arm64, x86
-# https://docs.wasmer.io/ecosystem/wasmer/wasmer-features#compiler-support-by-chipset
-archs="x86_64* aarch64* i686*"
+# Wasmtime runtime only supports the following archs: x86_64, arm64
+# https://docs.wasmtime.dev/stability-tiers.html#unsupported-features-and-platforms
+archs="x86_64* aarch64*"
 build_style=cargo
 build_helper=qemu
-hostmakedepends="mandown"
-checkdepends="libssh2-devel pkg-config"
+configure_args="--no-default-features --features=plugins_from_target,web_server_capability"
+hostmakedepends="pkg-config"
+makedepends="libcurl-devel sqlite-devel"
+checkdepends="libssh2-devel"
 short_desc="Terminal workspace with batteries included"
-maintainer="Marcin Puc <tranzystorek.io@protonmail.com>"
+maintainer="tranzystorekk <tranzystorek.io@protonmail.com>"
 license="MIT"
 homepage="https://zellij.dev"
 changelog="https://raw.githubusercontent.com/zellij-org/zellij/main/CHANGELOG.md"
 distfiles="https://github.com/zellij-org/zellij/archive/refs/tags/v${version}.tar.gz"
-checksum=1f22223f251dbd352479d4671c0c742ffa225420667e20711d5515be2eb2a256
+checksum=fd1cb54df0453f7f1340bb293a2682bbeacbd307156aab919acdf715e36b6ee1
 make_check_pre="env LIBSSH2_SYS_USE_PKG_CONFIG=1"
 
 post_install() {
@@ -27,7 +29,4 @@ post_install() {
 		vtargetrun "${DESTDIR}/usr/bin/zellij" setup --generate-completion ${shell} > zellij.${shell}
 		vcompletion zellij.${shell} ${shell}
 	done
-
-	mandown docs/MANPAGE.md > zellij.1
-	vman zellij.1
 }

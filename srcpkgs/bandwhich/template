@@ -1,26 +1,26 @@
 # Template file for 'bandwhich'
 pkgname=bandwhich
-version=0.20.0
-revision=2
+version=0.23.1
+revision=1
 build_style=cargo
 short_desc="Terminal bandwidth utilization tool"
-maintainer="Jan Christian Grünhage <jan.christian@gruenhage.xyz>"
+maintainer="tranzystorekk <tranzystorek.io@protonmail.com>"
 license="MIT"
 homepage="https://github.com/imsnif/bandwhich"
-distfiles="${homepage}/archive/${version}.tar.gz"
-checksum=4bbf05be32439049edd50bd1e4d5a2a95b0be8d36782e4100732f0cc9f19ba12
-# cba for now
-make_check=no
+changelog="https://raw.githubusercontent.com/imsnif/bandwhich/main/CHANGELOG.md"
+distfiles="https://github.com/imsnif/bandwhich/archive/refs/tags/v${version}.tar.gz"
+checksum=aafb96d059cf9734da915dca4f5940c319d2e6b54e2ffb884332e9f5e820e6d7
 
-post_patch() {
-	# We're patching in Cargo.toml without patching in Cargo.lock, so the
-	# lockfile is out of date after patching. Aside of that, we need to
-	# update some transitive dependencies to fix the build (socket2,
-	# failure and linked-hash-map), which is also done by just regenerating
-	# Cargo.lock.
-	cargo generate-lockfile
+export BANDWHICH_GEN_DIR="${XBPS_BUILDDIR}/${pkgname}-${version}/gen"
+
+pre_build() {
+	mkdir gen
 }
 
 post_install() {
 	vlicense LICENSE.md
+	vcompletion gen/bandwhich.bash bash
+	vcompletion gen/bandwhich.fish fish
+	vcompletion gen/_bandwhich zsh
+	vman gen/bandwhich.1
 }

@@ -1,20 +1,21 @@
 # Template file for 'python3-gmpy2'
 pkgname=python3-gmpy2
-version=2.1.5
-revision=1
-build_style=python3-module
-hostmakedepends="python3-setuptools"
+version=2.2.1
+revision=2
+build_style=python3-pep517
+hostmakedepends="python3-setuptools python3-wheel"
 makedepends="python3-devel gmp-devel mpfr-devel libmpc-devel"
 depends="python3"
+checkdepends="python3-pytest python3-hypothesis"
 short_desc="Python3 interface to GMP, MPFR and MPC libraries"
 maintainer="Gonzalo Tornaría <tornaria@cmat.edu.uy>"
 license="LGPL-3.0-or-later"
 homepage="https://github.com/aleaxit/gmpy"
 changelog="https://github.com/aleaxit/gmpy/releases"
-distfiles="${PYPI_SITE}/g/gmpy2/gmpy2-${version}.tar.gz"
-checksum=bc297f1fd8c377ae67a4f493fc0f926e5d1b157e5c342e30a4d84dc7b9f95d96
+distfiles="${PYPI_SITE}/g/gmpy2/gmpy2-${version%r}.tar.gz"
+checksum=e83e07567441b78cb87544910cb3cc4fe94e7da987e93ef7622e76fb96650432
 
-do_check() {
-	PYTHONPATH="$(cd build/lib* && pwd)" \
-		python3 test/runtests.py
-}
+if [ "$XBPS_CHECK_PKGS" = full ]; then
+	# this would cause a build-time circular dependency
+	checkdepends+=" python3-mpmath"
+fi

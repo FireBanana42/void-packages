@@ -1,21 +1,21 @@
 # Template file for 'xbps-static'
 # NOTE: keep this package synchronized with "srcpkgs/xbps"
 pkgname=xbps-static
-version=0.59.1
-revision=6
+version=0.60.5
+revision=1
 # only musl
 archs="*-musl"
 build_style=configure
 hostmakedepends="pkg-config"
-makedepends="libarchive-devel"
+makedepends="libarchive-devel zlib-devel openssl-devel"
 depends="xbps-triggers"
 short_desc="XBPS package system utilities - static binaries"
 maintainer="Juan RP <xtraeme@voidlinux.org>"
 license="BSD-2-Clause, BSD-3-Clause, ISC"
 homepage="https://github.com/void-linux/xbps"
-changelog="https://github.com/void-linux/xbps/blob/master/NEWS"
+changelog="https://raw.githubusercontent.com/void-linux/xbps/master/NEWS"
 distfiles="https://github.com/void-linux/xbps/archive/${version}.tar.gz"
-checksum=0cbd8d5f23a62047c75974bca21da9f004a94efffd7f37c68562a8dbc869fb2a
+checksum=fba39edfdcfeb6f7e3f348a091453fefb087089999cf5bea20ea65ac6cf009dc
 
 do_configure() {
 	./configure --prefix=/usr --sysconfdir=/etc --enable-static

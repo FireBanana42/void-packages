@@ -1,17 +1,18 @@
 # Template file for 'ccls'
 pkgname=ccls
-version=0.20220729
-revision=2
+version=0.20241108
+revision=1
+_llvmver=19
 build_style=cmake
-hostmakedepends="clang-tools-extra"
-makedepends="clang-tools-extra libxml2-devel llvm ncurses-devel rapidjson zlib-devel"
+configure_args="-DUSE_SYSTEM_RAPIDJSON=ON
+ -DCMAKE_PREFIX_PATH=${XBPS_CROSS_BASE}/usr/lib/llvm/${_llvmver}
+ -DCLANG_RESOURCE_DIR=${XBPS_CROSS_BASE}/usr/lib/llvm/${_llvmver}/lib/clang/${_llvmver}"
+hostmakedepends="clang-tools-extra${_llvmver}"
+makedepends="clang-tools-extra${_llvmver} libxml2-devel llvm${_llvmver}-devel
+ ncurses-devel rapidjson zlib-devel"
 short_desc="C/C++/ObjC language server"
-maintainer="André Cerqueira <acerqueira021@gmail.com>"
+maintainer="Orphaned <orphan@voidlinux.org>"
 license="Apache-2.0"
 homepage="https://github.com/MaskRay/ccls"
 distfiles="https://github.com/MaskRay/ccls/archive/${version}.tar.gz"
-checksum=af19be36597c2a38b526ce7138c72a64c7fb63827830c4cff92256151fc7a6f4
-
-if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
-	configure_args="-DCMAKE_CXX_STANDARD_LIBRARIES=-latomic"
-fi
+checksum=76224663c3554eef9102dca66d804874d0252312d7c7d02941c615c87dcb68af

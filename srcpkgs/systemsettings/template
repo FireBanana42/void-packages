@@ -1,17 +1,18 @@
 # Template file for 'systemsettings'
 pkgname=systemsettings
-version=5.27.6
+version=6.4.3
 revision=1
 build_style=cmake
-configure_args="-DBUILD_TESTING=OFF"
-hostmakedepends="python3 qt5-qmake qt5-host-tools kconfig
- kpackage kcoreaddons kdoctools extra-cmake-modules gettext"
-makedepends="kcmutils-devel kdoctools khtml-devel kactivities5-stats-devel
- kirigami2-devel plasma-workspace-devel"
-depends="kirigami2 setxkbmap xrdb"
+configure_args="-DBUILD_TESTING=OFF -DKF6_HOST_TOOLING=/usr/lib/cmake
+ -DKDE_INSTALL_QTPLUGINDIR=lib/qt6/plugins"
+hostmakedepends="python3 qt6-base qt6-tools kf6-kcmutils kf6-kauth-tools
+ extra-cmake-modules gettext kf6-kdoctools qt6-declarative-host-tools"
+makedepends="kf6-kcmutils-devel kf6-kirigami-devel plasma-workspace-devel
+ kf6-kdoctools-devel"
+depends="kf6-kirigami setxkbmap xrdb"
 short_desc="KDE System settings"
 maintainer="John <me@johnnynator.dev>"
 license="GPL-2.0-or-later, GFDL-1.2-only"
 homepage="https://invent.kde.org/plasma/systemsettings"
 distfiles="${KDE_SITE}/plasma/${version}/${pkgname}-${version}.tar.xz"
-checksum=bc2c471f1e13e9d063b616552bdc0d831c430338f3e3b32bbb3c0418956e789d
+checksum=cc1cdcd710f3f5fd242486edca94d7193d45db417803ed629ac7627eb2305556

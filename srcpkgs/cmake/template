@@ -1,6 +1,6 @@
 # Template file for 'cmake'
 pkgname=cmake
-version=3.27.3
+version=4.0.2
 revision=1
 build_style=cmake
 configure_args="-DCMAKE_DOC_DIR=/share/doc/cmake
@@ -10,14 +10,14 @@ configure_args="-DCMAKE_DOC_DIR=/share/doc/cmake
  -DCMAKE_USE_SYSTEM_LIBRARIES=ON -DKWSYS_LFS_WORKS=1"
 hostmakedepends="gcc-fortran python3-Sphinx qt6-base qt6-tools"
 makedepends="expat-devel libarchive-devel libcurl-devel libuv-devel cppdap-devel
- ncurses-devel rhash-devel jsoncpp-devel qt6-base-devel qt6-tools-devel"
+ ncurses-devel rhash-devel jsoncpp-devel qt6-base-devel"
 checkdepends="pax pkg-config git"
 short_desc="Cross-platform, open-source build system"
 maintainer="Đoàn Trần Công Danh <congdanhqx@gmail.com>"
 license="BSD-3-Clause, ICU"
 homepage="https://www.cmake.org"
 distfiles="https://www.cmake.org/files/v${version%.*}/${pkgname}-${version}.tar.gz"
-checksum=66afdc0f181461b70b6fedcde9ecc4226c5cd184e7203617c83b7d8e47f49521
+checksum=1c3a82c8ca7cf12e0b17178f9d0c32f7ac773bd5651a98fcfd80fbf4977f8d48
 
 if [ "$XBPS_TARGET_LIBC" = musl ]; then
 	configure_args+=" -DCMake_NO_SELF_BACKTRACE=1"
@@ -37,7 +37,7 @@ post_install() {
 	vlicense fld.license
 	sed -e '/\$FreeBSD\$/q' Utilities/cmelf/elf_common.h >elf.license
 	vlicense elf.license
-	vlicense Copyright.txt
+	vlicense LICENSE.rst
 }
 
 cmake-gui_package() {

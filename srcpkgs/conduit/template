@@ -1,18 +1,16 @@
 # Template file for 'conduit'
 pkgname=conduit
-version=0.6.0
+version=0.10.6
 revision=1
-# needs ring/rustls
-archs="x86_64* i686* aarch64* armv[67]*"
 build_style=cargo
 hostmakedepends="clang pkg-config"
-makedepends="libzstd-devel"
+makedepends="libzstd-devel sqlite-devel"
 short_desc="Simple, fast and reliable chat server powered by Matrix"
 maintainer="Joel Beckmeyer <joel@beckmeyer.us>"
 license="Apache-2.0"
 homepage="https://conduit.rs/"
 distfiles="https://gitlab.com/famedly/conduit/-/archive/v${version}/conduit-v${version}.tar.gz"
-checksum=b722fb4f12ada5f965472b634dfa6a837aae03ff6712c210cdd292302bbb1259
+checksum=acf3f7e86505897eeff760eae569ef1c979325e0f2e16413c09262eb94f2568c
 
 system_accounts="_conduit"
 _conduit_homedir="/var/lib/conduit"
@@ -24,10 +22,13 @@ if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
 	XBPS_CROSS_RUSTFLAGS+=" -latomic"
 fi
 
-if [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
-	# doctests fail on x86_64 -> i686 chroot, so run everything *but* them
-	make_check_args+=" --lib --bins --tests --benches --examples"
-fi
+# copied from srcpkgs/oniux/template
+# aws-lc-sys only ships pre-generated files for certain architectures
+case "${XBPS_TARGET_MACHINE}" in
+armv[67]l*)
+	hostmakedepends+=" cmake rust-bindgen"
+	;;
+esac
 
 post_install() {
 	vsconf conduit-example.toml conduit.toml
