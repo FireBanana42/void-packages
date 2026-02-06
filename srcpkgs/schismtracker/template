@@ -1,6 +1,6 @@
 # Template file for 'schismtracker'
 pkgname=schismtracker
-version=20250415
+version=20251014
 revision=1
 build_style=gnu-configure
 hostmakedepends="pkg-config autoconf-archive automake SDL2-devel python3 git"
@@ -10,7 +10,7 @@ maintainer="Orphaned <orphan@voidlinux.org>"
 license="GPL-2.0-or-later"
 homepage="https://schismtracker.org"
 distfiles="https://github.com/schismtracker/schismtracker/archive/${version}.tar.gz"
-checksum=ba9b8e4381e9f3a3110ae7bb4e7794ac2399e88bb26a50c86a6f45beed57c5f3
+checksum=84e9977770a131f3bbc699c2d6cae8b3471e44a4ae1e62024f697caa6bf19d96
 
 pre_configure() {
 	autoreconf -fi

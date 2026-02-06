@@ -1,6 +1,6 @@
 # Template file for 'xlockmore'
 pkgname=xlockmore
-version=5.83
+version=5.87
 revision=1
 build_style=gnu-configure
 configure_args="--with-xinerama $(vopt_if opengl '--with-opengl --with-mesa')"
@@ -13,7 +13,7 @@ license="MIT"
 homepage="http://sillycycle.com/xlockmore.html"
 changelog="http://sillycycle.com/xlock/xlockmore.README"
 distfiles="http://sillycycle.com/xlock/xlockmore-${version}.tar.xz"
-checksum=a698d099fd6a3c19c41e197c106d9e8c3a38a4e8ff077c2aa4bac7629d69c8c3
+checksum=3f3bbfc4dde308ca80d393078f51538921da2b3c75d5c2a606420e1295606b7b
 CFLAGS="-D_DEFAULT_SOURCE"
 
 if [ "$XBPS_TARGET_LIBC" = "glibc" ]; then
